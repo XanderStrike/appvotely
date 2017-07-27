@@ -13,7 +13,7 @@
     } );
     </script>
     <ul class="js-question" data-question-id="<%= question.id %>" id="question_<%= question.id %>">
-      <% question.options.each do |option| %>
+      <% question.options.shuffle.each do |option| %>
         <li id="<%= option %>">
           <div class="row">
             <div class="col-md-10">
