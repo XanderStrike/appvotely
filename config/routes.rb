@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :questions, except: [:index, :show]
   resources :surveys
   get 'home/index'
-  put 'home/answer'
+  post 'home/answer'
   get 'home/results'
 
   # The priority is based upon order of creation: first created -> highest priority.

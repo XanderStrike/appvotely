@@ -1,5 +1,4 @@
 <h1><%= @survey.name %> Results</h1>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
 
 <div class="row">
   <% @survey.questions.each do |question| %>
@@ -11,10 +10,10 @@
       var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: <%= question.options.inspect.html_safe %>,
+              labels: <%= question.results.keys.inspect.html_safe %>,
               datasets: [{
-                  label: '# of Votes',
-                  data: <%= question.results.inspect.html_safe %>,
+                  label: 'Points',
+                  data: <%= question.results.values.inspect %>,
               }]
           },
           options: {

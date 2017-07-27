@@ -17,8 +17,14 @@ class Question < ActiveRecord::Base
   has_many :answers
 
   def results
-    options.map do |op|
-      answers.where(selection: op).count
+    result = Hash.new(0)
+    answers.each do |answer|
+      total = answer.selection.size
+      answer.selection.each_with_index do |selection, index|
+        result[selection] += total - (index - 1)
+      end
     end
+
+    result
   end
 end

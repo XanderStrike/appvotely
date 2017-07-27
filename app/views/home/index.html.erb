@@ -1,13 +1,56 @@
 <h1><%= @survey.name %></h1>
 
-<%= simple_form_for :answer, url: home_answer_path, method: :put do |f| %>
-  <% @survey.questions.each do |question| %>
-    <%= simple_fields_for "[answer]#{question.id}" do |qf| %>
-      <div class="well">
-        <%= qf.input "answer", label: question.name, collection: question.options, input_html: {class: 'form-control'}  %>
-      </div>
-    <% end %>
-  <% end %>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-  <%= f.button :submit %>
+<% @survey.questions.each do |question| %>
+  <div class="well">
+    <h3><%= question.name %></h3>
+    <p>Drag to arrange (or use the buttons on mobile)</p>
+    <script>
+    $( function() {
+      $( "#question_<%= question.id %>" ).sortable();
+      $( "#question_<%= question.id %>" ).disableSelection();
+    } );
+    </script>
+    <ul class="js-question" data-question-id="<%= question.id %>" id="question_<%= question.id %>">
+      <% question.options.each do |option| %>
+        <li id="<%= option %>">
+          <div class="row">
+            <div class="col-md-10">
+              <span class="btn btn-default btn-block"><%= option %></span>
+            </div>
+            <div class="col-md-1">
+              <span class="btn btn-default btn-block js-up">UP</span>
+            </div>
+            <div class="col-md-1">
+              <span class="btn btn-default btn-block js-down">Down</span>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
+
+<a class="js-submit btn btn-primary">Save</a>
+
+<script>
+  $('.js-up').click(function(){
+      var current = $(this).closest('li');
+      current.prev().before(current);
+  });
+  $('.js-down').click(function(){
+      var current = $(this).closest('li');
+      current.next().after(current);
+  });
+
+  $('.js-submit').on('click', function() {
+    var data = {}
+    $('.js-question').each(function(index) {
+      data[$(this).data('question-id')] = $(this).sortable('toArray');
+    });
+    console.log(data);
+
+    $.post("<%= home_answer_path %>", {answers: data})
+  });
+</script>

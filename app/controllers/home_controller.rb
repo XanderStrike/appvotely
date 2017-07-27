@@ -4,8 +4,8 @@ class HomeController < ApplicationController
   end
 
   def answer
-    params[:answer].keys.each do |x|
-      Answer.new(question_id: x, selection: params[:answer][x][:answer]).save!
+    params[:answers].keys.each do |key|
+      Answer.new(question_id: key, selection: params[:answers][key]).save!
     end
 
     redirect_to controller: 'home', action: 'results', survey_id: Answer.last.question.survey.id
