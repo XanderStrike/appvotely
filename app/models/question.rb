@@ -15,4 +15,10 @@ class Question < ActiveRecord::Base
   serialize :options
   belongs_to :survey
   has_many :answers
+
+  def results
+    options.map do |op|
+      answers.where(selection: op).count
+    end
+  end
 end

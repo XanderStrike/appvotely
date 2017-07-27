@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :surveys
   get 'home/index'
   put 'home/answer'
+  get 'home/results'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
