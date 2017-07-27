@@ -1,5 +1,4 @@
 <h1><%= @survey.name %> Results</h1>
-
 <div class="row">
   <% @survey.questions.each do |question| %>
     <div class="col-md-6">
@@ -10,10 +9,10 @@
       var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: <%= question.results.keys.inspect.html_safe %>,
+              labels: <%= question.results.sort_by {|_key, value| value}.reverse.map(&:first).inspect.html_safe %>,
               datasets: [{
                   label: 'Points',
-                  data: <%= question.results.values.inspect %>,
+                  data: <%= question.results.sort_by {|_key, value| value}.reverse.map(&:last).inspect %>,
               }]
           },
           options: {
