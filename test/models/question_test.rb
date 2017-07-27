@@ -1,14 +1,19 @@
-# frozen_string_literal: true
 # == Schema Information
 #
-# Table name: surveys
+# Table name: questions
 #
 #  id         :integer          not null, primary key
 #  name       :string
+#  options    :string
+#  survey_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class Survey < ActiveRecord::Base
-  has_many :questions
+require 'test_helper'
+
+class QuestionTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

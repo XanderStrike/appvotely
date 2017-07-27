@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: surveys
@@ -9,6 +8,10 @@
 #  updated_at :datetime         not null
 #
 
-class Survey < ActiveRecord::Base
-  has_many :questions
+require 'test_helper'
+
+class SurveyTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

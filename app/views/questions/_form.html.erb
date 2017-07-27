@@ -1,0 +1,9 @@
+<%= simple_form_for(@question) do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :survey_id, as: :hidden %>
+  <%= f.input :name, input_html: {class: 'form-control'} %>
+  <%= f.input :options, label: 'Options (comma separated)', as: :text, input_html: {class: 'form-control', value: @question.options && @question.options.join(',')} %>
+
+  <%= f.button :submit %>
+<% end %>

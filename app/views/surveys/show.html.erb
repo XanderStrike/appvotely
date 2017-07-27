@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @survey.name %></h1>
+
+<h2>Questions</h2>
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @survey.questions.each do |question| %>
+    <tr>
+      <td><%= question.name %></td>
+      <td><%= link_to 'Edit', edit_question_path(question) %></td>
+      <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Add Question', new_question_path(survey_id: @survey.id) %> |
+
+<%= link_to 'Edit', edit_survey_path(@survey) %> |
+<%= link_to 'Back', surveys_path %>

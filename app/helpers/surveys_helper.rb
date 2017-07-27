@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: surveys
@@ -9,6 +8,5 @@
 #  updated_at :datetime         not null
 #
 
-class Survey < ActiveRecord::Base
-  has_many :questions
+module SurveysHelper
 end

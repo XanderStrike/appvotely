@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: questions
@@ -11,7 +10,14 @@
 #  updated_at :datetime         not null
 #
 
-class Question < ActiveRecord::Base
-  serialize :options
-  belongs_to :survey
-end
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  options: MyString
+  survey_id: MyString
+
+two:
+  name: MyString
+  options: MyString
+  survey_id: MyString
