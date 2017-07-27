@@ -1,3 +1,13 @@
-<h1>Index</h1>
+<h1><%= @survey.name %></h1>
 
-fuck tha police
+<%= simple_form_for :answer, url: home_answer_path, method: :put do |f| %>
+  <% @survey.questions.each do |question| %>
+    <%= simple_fields_for "[answer]#{question.id}" do |qf| %>
+      <div class="well">
+        <%= qf.input "answer", label: question.name, collection: question.options, input_html: {class: 'form-control'}  %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= f.button :submit %>
+<% end %>

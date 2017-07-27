@@ -1,16 +1,17 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  options    :string
+#  survey_id  :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
-
-  # GET /questions
-  # GET /questions.json
-  def index
-    @questions = Question.all
-  end
-
-  # GET /questions/1
-  # GET /questions/1.json
-  def show
-  end
 
   # GET /questions/new
   def new
