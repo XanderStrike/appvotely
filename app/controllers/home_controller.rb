@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @survey = Survey.first
+    @survey = Survey.default
 
     if cookies[:answered].to_i == @survey.id
       redirect_to controller: 'home', action: 'results', survey_id: @survey.id

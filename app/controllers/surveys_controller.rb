@@ -6,6 +6,7 @@
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  default    :boolean
 #
 
 class SurveysController < ApplicationController
@@ -79,6 +80,6 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params.require(:survey).permit(:name)
+      params.require(:survey).permit(:name, :default)
     end
 end
