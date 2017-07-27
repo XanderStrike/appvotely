@@ -21,7 +21,7 @@ class Question < ActiveRecord::Base
     answers.each do |answer|
       total = answer.selection.size
       answer.selection.each_with_index do |selection, index|
-        result[selection] += total - (index - 1)
+        result[selection] += total - index
       end
     end
 
