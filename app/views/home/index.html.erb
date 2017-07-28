@@ -28,6 +28,8 @@
       </div>
       <div class="col-md-6">
         <p>2. Drag the options into descending order from best to worst.</p>
+        <p id="question_<%= question.id %>_complete" style="display:none"><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:green"></span> Section complete, thanks!</p>
+        <p id="question_<%= question.id %>_incomplete"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red"></span> You must add at least 5 options.</p>
         <ul class="js-question" data-question-id="<%= question.id %>" id="question_<%= question.id %>">
         </ul>
       </div>
@@ -35,7 +37,7 @@
   </div>
 <% end %>
 
-<a class="js-submit btn btn-primary">Save</a>
+<a class="js-submit btn btn-primary" disabled>Save</a><br><br><br>
 
 <script>
   function rehook() {
@@ -52,6 +54,10 @@
   rehook()
 
   $('.js-submit').on('click', function() {
+    console.log(validateAll());
+    if (!validateAll())
+      return;
+
     var data = {}
     $('.js-question').each(function(index) {
       data[$(this).data('question-id')] = $(this).sortable('toArray');
@@ -70,12 +76,41 @@
       var id = $(this).data('option-id');
       var questionId = $(this).data('question-id');
       $("#question_" + questionId).append(itemTemplate.replace(/{option_class}/g, optionNameToId(id)).replace(/{option}/g, id));
+      validateAll();
       rehook();
     } else {
       $(this).html('Add');
       $('.' + optionNameToId($(this).data('option-id'))).remove();
+      validateAll();
     }
   });
+
+  function validateAll() {
+    var allValid = true
+    $('.js-question').each(function() {
+      allValid = allValid && validate($(this).attr('id'));
+    });
+
+    if (allValid) {
+      $('.js-submit').removeAttr('disabled');
+    } else {
+      $('.js-submit').attr('disabled', 'disabled');
+    }
+
+    return allValid;
+  }
+
+  function validate(containerId) {
+    if ($('#' + containerId + ' li').length >= 5) {
+      $('#' + containerId + '_complete').show();
+      $('#' + containerId + '_incomplete').hide();
+      return true;
+    } else {
+      $('#' + containerId + '_complete').hide();
+      $('#' + containerId + '_incomplete').show();
+      return false;
+    }
+  }
 
   function optionNameToId(name) {
     return name.replace(/[\W]/g, '_');
