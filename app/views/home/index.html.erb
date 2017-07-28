@@ -57,21 +57,23 @@
       data[$(this).data('question-id')] = $(this).sortable('toArray');
     });
 
+    console.log(data);
+
     $.post("<%= home_answer_path %>", {answers: data})
   });
 
-  var itemTemplate = `<li id="{option_id}"><div class="btn-group" role="group"><span class="btn btn-default">{option}</span><span class="btn btn-default js-up">⬆️</span><span class="btn btn-default js-down">⬇️</span></div></li>`;
+  var itemTemplate = `<li id="{option}" class="{option_class}"><div class="btn-group" role="group"><span class="btn btn-default">{option}</span><span class="btn btn-default js-up">⬆️</span><span class="btn btn-default js-down">⬇️</span></div></li>`;
 
   $('.js-add-option').click(function() {
     if ($(this).html() == 'Add') {
       $(this).html('Remove');
       var id = $(this).data('option-id');
       var questionId = $(this).data('question-id');
-      $("#question_" + questionId).append(itemTemplate.replace(/{option_id}/g, optionNameToId(id)).replace(/{option}/g, id));
+      $("#question_" + questionId).append(itemTemplate.replace(/{option_class}/g, optionNameToId(id)).replace(/{option}/g, id));
       rehook();
     } else {
       $(this).html('Add');
-      $('#' + optionNameToId($(this).data('option-id'))).remove();
+      $('.' + optionNameToId($(this).data('option-id'))).remove();
     }
   });
 
