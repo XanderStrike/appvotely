@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     @survey = Survey.default
 
-    if cookies[:answered].to_i == @survey.id
+    if cookies[:u_cheeky_fucker].to_i == @survey.id
       redirect_to controller: 'home', action: 'results', survey_id: @survey.id
     end
   end
@@ -16,7 +16,7 @@ class HomeController < ApplicationController
   end
 
   def results
-    cookies.permanent[:answered] = params[:survey_id]
+    cookies.permanent[:u_cheeky_fucker] = params[:survey_id]
     @survey = Survey.find(params[:survey_id])
   end
 end
