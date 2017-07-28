@@ -38,14 +38,18 @@
 <a class="js-submit btn btn-primary">Save</a>
 
 <script>
-  $('.js-up').click(function(){
-      var current = $(this).closest('li');
-      current.prev().before(current);
-  });
-  $('.js-down').click(function(){
-      var current = $(this).closest('li');
-      current.next().after(current);
-  });
+  function rehook() {
+    $('.js-up').off().click(function(){
+        var current = $(this).closest('li');
+        current.prev().before(current);
+    });
+    $('.js-down').off().click(function(){
+        var current = $(this).closest('li');
+        current.next().after(current);
+    });
+  }
+
+  rehook()
 
   $('.js-submit').on('click', function() {
     var data = {}
@@ -56,17 +60,22 @@
     $.post("<%= home_answer_path %>", {answers: data})
   });
 
-  var itemTemplate = `<li id="{option}"><div class="btn-group" role="group"><span class="btn btn-default">{option}</span><span class="btn btn-default js-up">⬆️</span><span class="btn btn-default js-down">⬇️</span></div></li>`;
+  var itemTemplate = `<li id="{option_id}"><div class="btn-group" role="group"><span class="btn btn-default">{option}</span><span class="btn btn-default js-up">⬆️</span><span class="btn btn-default js-down">⬇️</span></div></li>`;
 
   $('.js-add-option').click(function() {
     if ($(this).html() == 'Add') {
       $(this).html('Remove');
       var id = $(this).data('option-id');
       var questionId = $(this).data('question-id');
-      $("#question_" + questionId).append(itemTemplate.replace(/{option}/g, id));
+      $("#question_" + questionId).append(itemTemplate.replace(/{option_id}/g, optionNameToId(id)).replace(/{option}/g, id));
+      rehook();
     } else {
       $(this).html('Add');
-      $('#' + $(this).data('option-id')).remove();
+      $('#' + optionNameToId($(this).data('option-id'))).remove();
     }
   });
+
+  function optionNameToId(name) {
+    return name.replace(/ /g, '_');
+  }
 </script>
