@@ -17,9 +17,9 @@ class Question < ActiveRecord::Base
   has_many :answers
 
   def results
-    result = Hash.new(0)
+    result = Hash[options.product([0])]
     answers.each do |answer|
-      total = answer.selection.size
+      total = options.size
       answer.selection.each_with_index do |selection, index|
         result[selection] += total - index
       end

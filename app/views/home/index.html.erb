@@ -6,30 +6,32 @@
 <% @survey.questions.each do |question| %>
   <div class="well">
     <h3><%= question.name %></h3>
-    <p>Drag each entry (or use the buttons on mobile) to order the entries from most best to least best, in descending order.</p>
     <script>
     $( function() {
       $( "#question_<%= question.id %>" ).sortable();
       $( "#question_<%= question.id %>" ).disableSelection();
     } );
     </script>
-    <ul class="js-question" data-question-id="<%= question.id %>" id="question_<%= question.id %>">
-      <% question.options.shuffle.each do |option| %>
-        <li id="<%= option %>">
-          <div class="row">
-            <div class="col-md-10">
-              <span class="btn btn-default btn-block"><%= option %></span>
-            </div>
-            <div class="col-md-1">
-              <span class="btn btn-default btn-block js-up">Up</span>
-            </div>
-            <div class="col-md-1">
-              <span class="btn btn-default btn-block js-down">Down</span>
-            </div>
-          </div>
-        </li>
-      <% end %>
-    </ul>
+    <div class="row">
+      <div class="col-md-6">
+        <p>1. Add all the options you care to vote on.</p>
+        <ul>
+          <% question.options.shuffle.each do |option| %>
+            <li>
+              <div class="btn-group" role="group">
+                <span class="btn btn-default"><%= option %></span>
+                <span class="btn btn-default js-add-option" data-option-id="<%= option %>" data-question-id="<%= question.id %>">Add</span>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <p>2. Drag the options into descending order from best to worst.</p>
+        <ul class="js-question" data-question-id="<%= question.id %>" id="question_<%= question.id %>">
+        </ul>
+      </div>
+    </div>
   </div>
 <% end %>
 
@@ -50,8 +52,21 @@
     $('.js-question').each(function(index) {
       data[$(this).data('question-id')] = $(this).sortable('toArray');
     });
-    console.log(data);
 
     $.post("<%= home_answer_path %>", {answers: data})
+  });
+
+  var itemTemplate = `<li id="{option}"><div class="btn-group" role="group"><span class="btn btn-default">{option}</span><span class="btn btn-default js-up">⬆️</span><span class="btn btn-default js-down">⬇️</span></div></li>`;
+
+  $('.js-add-option').click(function() {
+    if ($(this).html() == 'Add') {
+      $(this).html('Remove');
+      var id = $(this).data('option-id');
+      var questionId = $(this).data('question-id');
+      $("#question_" + questionId).append(itemTemplate.replace(/{option}/g, id));
+    } else {
+      $(this).html('Add');
+      $('#' + $(this).data('option-id')).remove();
+    }
   });
 </script>
