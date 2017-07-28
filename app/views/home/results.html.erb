@@ -1,4 +1,6 @@
 <h1><%= @survey.name %> Results</h1>
+<p>Point totals are calculated using <a href="https://en.wikipedia.org/wiki/Borda_count">Borda Count</a>.</p>
+
 <div class="row">
   <% @survey.questions.each do |question| %>
     <div class="col-md-6">

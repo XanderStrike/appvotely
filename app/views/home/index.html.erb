@@ -1,11 +1,12 @@
 <h1><%= @survey.name %></h1>
+<p>Point totals are calculated using <a href="https://en.wikipedia.org/wiki/Borda_count">Borda Count</a>.</p>
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <% @survey.questions.each do |question| %>
   <div class="well">
     <h3><%= question.name %></h3>
-    <p>Drag to arrange (or use the buttons on mobile)</p>
+    <p>Drag each entry (or use the buttons on mobile) to order the entries from most best to least best, in descending order.</p>
     <script>
     $( function() {
       $( "#question_<%= question.id %>" ).sortable();
@@ -20,7 +21,7 @@
               <span class="btn btn-default btn-block"><%= option %></span>
             </div>
             <div class="col-md-1">
-              <span class="btn btn-default btn-block js-up">UP</span>
+              <span class="btn btn-default btn-block js-up">Up</span>
             </div>
             <div class="col-md-1">
               <span class="btn btn-default btn-block js-down">Down</span>
