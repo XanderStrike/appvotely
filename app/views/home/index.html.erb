@@ -76,6 +76,6 @@
   });
 
   function optionNameToId(name) {
-    return name.replace(/ /g, '_');
+    return name.replace(/[\W]/g, '_');
   }
 </script>
