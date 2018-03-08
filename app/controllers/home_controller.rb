@@ -3,7 +3,7 @@ class HomeController < ApplicationController
     @survey = Survey.default
 
     if cookies[:u_cheeky_fucker].to_i == @survey.id
-      redirect_to controller: 'home', action: 'results', survey_id: @survey.id
+      redirect_to controller: 'home', action: 'thankyou', survey_id: @survey.id
     end
   end
 
@@ -12,7 +12,11 @@ class HomeController < ApplicationController
       Answer.new(question_id: key, selection: params[:answers][key]).save!
     end
 
-    redirect_to controller: 'home', action: 'results', survey_id: Answer.last.question.survey.id
+    redirect_to controller: 'home', action: 'thankyou', survey_id: Answer.last.question.survey.id
+  end
+
+  def thankyou
+    cookies.permanent[:u_cheeky_fucker] = params[:survey_id]
   end
 
   def results
