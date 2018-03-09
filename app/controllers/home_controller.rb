@@ -20,7 +20,7 @@ class HomeController < ApplicationController
   end
 
   def results
-    cookies.permanent[:u_cheeky_fucker] = params[:survey_id]
+    # cookies.permanent[:u_cheeky_fucker] = params[:survey_id]
     @survey = Survey.find(params[:survey_id])
   end
 end
