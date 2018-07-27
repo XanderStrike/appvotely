@@ -29,7 +29,7 @@
       <div class="col-md-6">
         <p>2. Drag the options into descending order from best to worst.</p>
         <p id="question_<%= question.id %>_complete" style="display:none"><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:green"></span> Section complete, thanks!</p>
-        <p id="question_<%= question.id %>_incomplete"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red"></span> You must add at least 5 options.</p>
+        <p id="question_<%= question.id %>_incomplete"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red"></span> You must add at least 3 options.</p>
         <ul class="js-question" data-question-id="<%= question.id %>" id="question_<%= question.id %>">
         </ul>
       </div>
@@ -101,7 +101,7 @@
   }
 
   function validate(containerId) {
-    if ($('#' + containerId + ' li').length >= 5) {
+    if ($('#' + containerId + ' li').length >= 3) {
       $('#' + containerId + '_complete').show();
       $('#' + containerId + '_incomplete').hide();
       return true;
